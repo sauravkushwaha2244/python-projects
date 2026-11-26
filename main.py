@@ -1,16 +1,22 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from dash import Dash, dcc, html, Output, Input
+import dash_bootstrap_components as dbc
+app = Dash(__name__, external_stylesheets=[dbc.themes.SOLAR])
+server = app.server
+
+app.layout = dbc.Container([
+    my_text := dcc.Input(value='Type Text new now'),
+    my_output := dcc.Markdown(children=''),
+])
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.callback(
+    Output(component_id=my_output, component_property='children'),
+    Input(component_id=my_text, component_property='value'),
+)
+def update_text(el_texto):
+    return el_texto
 
-
-# Press the green button in the gutter to run the script.
+# Run application
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run(debug=True)
